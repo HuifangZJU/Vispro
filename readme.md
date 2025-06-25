@@ -37,6 +37,8 @@ pip install -r requirements.txt
 ```
 
 ### Usage
+The full list of pretrained models can be found [Direct Download](https://drive.google.com/file/d/1GhsAu1spv-jSs-3z24eQwKf38tj0rR9x/view?usp=sharing)
+
 
 Process the high-resolution image only.
 
