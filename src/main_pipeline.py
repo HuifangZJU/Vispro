@@ -15,7 +15,7 @@ from pymatting.util.util import stack_images
 from scipy.ndimage.morphology import binary_erosion
 import numpy as np
 from .models.u2net import detect
-
+from src.utils.image_processing_utils import overlay_mask_on_image
 cuda = True if torch.cuda.is_available() else False
 torch.cuda.set_device(0)
 if cuda:
@@ -239,7 +239,7 @@ def get_inpainting_result(image_array: np.ndarray, mask_array: np.ndarray) -> np
     return inpainted_image
 
 
-def remove_background(image_data, model_name: Optional[str] = "u2net", am=False, resizing_scale=320) -> Tuple:
+def remove_background(image_data, model_name: Optional[str] = "u2net", am=False,tissue_threshold=100, resizing_scale=320) -> Tuple:
     """
     Removes the background from an image using a specified model and saves the result.
 
@@ -265,11 +265,11 @@ def remove_background(image_data, model_name: Optional[str] = "u2net", am=False,
 
     tissue_rgba = np.asarray(tissue_image)
     tissue_mask = tissue_rgba[:, :, -1]
-    tissue_rgb = get_rgb_img(tissue_rgba)
+    tissue_rgb = get_rgb_img(tissue_rgba,tissue_threshold)
     return tissue_rgba,tissue_rgb,tissue_mask
 
 
-def get_rgb_img(rgba_image) -> None:
+def get_rgb_img(rgba_image,tissue_threshold) -> None:
     """
     Converts an RGBA image to an RGB image with a white background and saves it.
 
@@ -283,7 +283,7 @@ def get_rgb_img(rgba_image) -> None:
 
     # Create a binary alpha mask to standardize transparency handling
     alpha_channel = rgba_array[..., 3]
-    binary_alpha = np.where(alpha_channel > 200, 255, 0).astype(np.uint8)
+    binary_alpha = np.where(alpha_channel > tissue_threshold, 255, 0).astype(np.uint8)
     rgba_array[..., 3] = binary_alpha
 
     # Recreate the RGBA image with the updated alpha channel
@@ -299,7 +299,7 @@ def get_rgb_img(rgba_image) -> None:
 
 
 
-def tissue_segregation(rgb_image: np.ndarray, input_mask: np.ndarray, tissue_value=200, minimum_tissue_size=500) -> Tuple:
+def tissue_segregation(rgb_image: np.ndarray, input_mask: np.ndarray, tissue_value=200, minimum_tissue_size=200) -> Tuple:
     """
     Segregates tissue regions in a binary mask by applying thresholding
     and identifying connected components.
@@ -334,7 +334,7 @@ def tissue_segregation(rgb_image: np.ndarray, input_mask: np.ndarray, tissue_val
             new_label += 1
 
     print(f"Number of components after removal: {np.max(cleaned_mask)}")
-    overlay = label2rgb(cleaned_mask, image=rgb_image, bg_label=0, alpha=0.5, kind='overlay')
+    overlay = overlay_mask_on_image(rgb_image, cleaned_mask, alpha=0.6)
     return overlay,cleaned_mask
 
 
