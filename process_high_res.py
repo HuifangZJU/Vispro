@@ -26,7 +26,6 @@ def run_Vispro(imagepath,save=False):
     a[1,2].imshow(segregation_image)
     plt.show()
 
-test_image_path = '/media/huifang/data/registration/heart/stomics/3d/spatial/tissue_hires_image.png'
-test_image_path = './test_data/jason/tissue_hires_image.png'
+test_image_path = './test_data/tissue_hires_image.png'
 run_Vispro(test_image_path,save=True)
 
