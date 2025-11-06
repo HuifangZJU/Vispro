@@ -140,7 +140,7 @@ def get_marker_mask(image_tensor: torch.Tensor) -> np.ndarray:
     """
     # Generate mask from the model output
     model = get_combined_Generator(device)
-    cnn_mask_tensor, _, _ = model(image_tensor)
+    cnn_mask_tensor = model(image_tensor)
 
     # Convert to NumPy and adjust dimensions
     cnn_mask = cnn_mask_tensor.cpu().detach().numpy().squeeze()
@@ -256,8 +256,8 @@ def remove_background(image_data, model_name: Optional[str] = "u2net", am=False,
         model,
         input_size = resizing_scale,
         alpha_matting=am,
-        alpha_matting_foreground_threshold=240,
-        alpha_matting_background_threshold=240,
+        alpha_matting_foreground_threshold=200,
+        alpha_matting_background_threshold=200,
         alpha_matting_erode_structure_size=25,
         alpha_matting_base_size=1000
     )
