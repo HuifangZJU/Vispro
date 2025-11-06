@@ -1,5 +1,5 @@
 from ..models.ffc import DefaultInpaintingModule
-from ..models.unet import Rich_Parrel_Attention_Generator
+from ..models.unet import Marker_Unet, Marker_Unet_Deep
 from ..models.u2net import u2net
 import torch
 import torch.optim
@@ -7,9 +7,9 @@ import torch.optim
 __all__ = ["get_combined_Generator", "getLamaInpainter", "get_bg_model"]
 
 def get_combined_Generator(device):
-    generator = Rich_Parrel_Attention_Generator()
+    generator = Marker_Unet_Deep()
     generator.load_state_dict((torch.load(
-        './pretrained_models/g_600.pth')))
+        './pretrained_models/g_1000.pth')))
     generator.eval()
     generator.to(device)
     return generator
