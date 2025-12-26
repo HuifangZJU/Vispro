@@ -37,7 +37,7 @@ pip install -r requirements.txt
 ```
 
 ### Usage
-The full list of pretrained models can be found [Direct Download](https://drive.google.com/file/d/13M_bHQfy8crnF1Dg8PXH0NTGAYNmi78M/view?usp=drive_link)
+The full list of pretrained models can be found [Direct Download](https://drive.google.com/file/d/13M_bHQfy8crnF1Dg8PXH0NTGAYNmi78M/view?usp=drive_link) Please place the pretrained models in the folder Vispro/pretrained_models.
 
 
 Process the high-resolution image only.
