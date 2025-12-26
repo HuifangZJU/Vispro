@@ -4,7 +4,7 @@ from src.main_pipeline import get_marker_mask,get_inpainting_result,remove_backg
 from src.utils.image_processing_utils import save_result
 from pathlib import Path
 
-def run_Vispro(imagepath,save=False):
+def run_Vispro(imagepath,save=True):
     img_var, img_np = get_image_var(imagepath)
     marker_mask = get_marker_mask(img_var)
     inpainted_image = get_inpainting_result(img_np,marker_mask)
