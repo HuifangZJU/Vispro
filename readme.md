@@ -48,7 +48,7 @@ python process_high_res.py --image_path /test_data/tissue_hires_image.png
 Process the original large image.
 
 ```bash
-python process_large_image.py --high_res_image_path /test_data/151673/spatial/tissue_hires_image.png --original_image_path /test_data/151673/151673_full_image.tif
+python process_large_image.py --high_res_image_path /path/to/your/tissue_hires_image.png --original_image_path /path/to/original/microscopy/image.tif
 ```
 
 Licensed under [MIT License](./LICENSE)
